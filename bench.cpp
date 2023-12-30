@@ -171,6 +171,7 @@ auto benchmark(size_t M, size_t K, size_t N, size_t repeat, Func func) {
 auto bench_all(size_t M, size_t K, size_t N, size_t repeat)
 {
     std::vector<std::tuple<float, double, double>> ret;
+    ret.push_back(benchmark(M, K, N, 3, matmul_naive));
     ret.push_back(benchmark(M, K, N, repeat, matmul_cblas));
 
     auto rknn_setup = [&](){
@@ -199,8 +200,8 @@ int main()
     std::vector<size_t> sizes = {256, 512, 1024, 2048};
     size_t repeat = 20;
 
-    std::cout << "| size | cblas, (min, avg, std) | rknn, (min, avg, std) |" << std::endl;
-    std::cout << "| --- | --- | --- |" << std::endl;
+    std::cout << "| size | naive, (min, avg, std) | cblas, (min, avg, std) | rknn, (min, avg, std) |" << std::endl;
+    std::cout << "| --- | --- | --- | --- |" << std::endl;
 
     auto tupleToString = [](const std::tuple<float, double, double> &t)
     {
@@ -211,7 +212,8 @@ int main()
     };
     for (auto size : sizes) {
         auto ret = bench_all(size, size, size, repeat);
-        std::cout << "|" << size << "|" << tupleToString(ret[0]) << "|" << tupleToString(ret[1]) << "| " << std::endl;
+        std::cout << "|" << size << "|" << tupleToString(ret[0]) << "|" << tupleToString(ret[1]) << "| "
+                  << "|" << tupleToString(ret[2]) << "|" << std::endl;
     }
 
     return 0;
