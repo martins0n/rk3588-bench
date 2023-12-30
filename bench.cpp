@@ -212,7 +212,7 @@ int main()
     };
     for (auto size : sizes) {
         auto ret = bench_all(size, size, size, repeat);
-        std::cout << "|" << size << "|" << tupleToString(ret[0]) << "|" << tupleToString(ret[1]) << "| "
+        std::cout << "|" << size << "|" << tupleToString(ret[0]) << "|" << tupleToString(ret[1])
                   << "|" << tupleToString(ret[2]) << "|" << std::endl;
     }
 
